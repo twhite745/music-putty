@@ -1,0 +1,254 @@
+body, html{
+	margin:0 auto;
+	padding:0;
+	font-size:16px;
+	font-family: MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', Helvetica, Arial, sans-serif;/*"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+	/*right now odd fonts mess up the search bar at the top*/
+	font-weight: 300;
+	min-width:1200px;
+	z-index:0;
+}
+html { -webkit-font-smoothing: antialiased; }
+html {
+  background: url(./mainPics/background4.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+* { margin:0px; padding:0px; text-decoration:none;}
+#wrap{
+
+	background-color:#242726;
+
+	width:1100px;
+	margin:10px auto;
+}
+.backgroundColor{background-color:#F9F6EC;}
+
+.noCursor{cursor: default;}
+.bold{font-weight:bold;}
+.floatRight{float:right;}
+.floatLeft{float:right;}
+.clearFix{clear:both;height:0;}
+/* ----------------------------- header ---------------------------- */
+#logo{}
+/* --------------------------- Left body ----------------------------------- */
+#leftBody{width:650px;float:left;box-shadow: 0px 0px 5px #000;}
+#rightBody{width:400px;float:left;margin-left:20px;box-shadow: 0px 0px 5px #000;}
+
+/*********bandSummary**********/
+#bandSummary{padding:1em;position:relative;height:5.5em}
+
+#bandSummary img{float:left;margin-right:20px;}
+#bandSummary h1{}
+#bandSummary p{}
+#bandSummary button{background-color:#1998ab;color:#fff;border:none;cursor:pointer;border-radius: 0;padding:.3em;margin-top:.3em;}
+#bandBioCover{}
+#bandSummary #bandBioHidden{/*position:absolute;top:0;left:0;*//*display:none;*/margin-left:20px;}
+
+/*********songAccordian**********/
+#songAccordian{padding:1em;}
+
+#tabMenu {margin:0;padding:0 0 0 0;list-style:none;font-size:16px;}
+#tabMenu li {float:left;padding:4px 0px 4px 0px;cursor:pointer;cursor:hand;/*text-align:center;*/
+	/*border-top:#000 solid 2px;border-left:#000 solid 2px;border-right:#000 solid 2px;*/color:#fff;}
+#tabMenu li p{margin-left:6px;}
+
+#tabMenu li:nth-of-type(1n){background-color:#439c68;}
+#tabMenu li:nth-of-type(2n){background-color:#b45653;}
+#tabMenu li:nth-of-type(3n){background-color:#138096;}
+#tabMenu li:nth-of-type(4n){background-color:#439c68;}
+#tabMenu li:nth-of-type(5n){background-color:#b45653;}
+#tabMenu li:nth-of-type(6n){background-color:#138096;}
+
+#tabMenu li.selected {box-shadow: 0px 0px 5px #000;}
+
+
+.songAccordian{width:100%;}
+.songBody {background-color:#f9f6ec;clear:left;padding-top:10px;
+	border-style:solid;
+	border-color:#cacaca;
+	border-width:1px;
+	border-top:none;}
+
+.songBody div.parent {display:none;}
+.songBody div.show {display:block;}
+.songBody .albumInfo{width:35%;float:right;margin-right:10px;text-align:center;}
+.songBody .albumInfo p{margin:2px;}
+.songBody div table {text-align:left;width:60%;margin:5px 0px 5px 15px;border-collapse: collapse;}
+.songBody div table td {padding:2px 2px;cursor:hand;margin:0;}
+.songBody .albumInfo button {background-color:#1998ab;cursor:pointer;border-radius: 0;border:none;padding:2px 4px;color:#fff;margin:2px;}
+/*.songBody div table tr:last-of-type:tr {border-bottom:none}*/
+
+.songBody td img{background-color:none;border:none;display:block;width:16px;height:16px;cursor:pointer;border-radius: 0;}
+.songBody td img:active{position:relative;top:1px;}
+.songBody td .play{}
+.songBody td .add{}
+.songBody td .download{display:inline;width: auto;padding:0 2px;line-height:100%;color:#555;background-color:inherit;border:none;border-radius: 0;cursor:pointer;}
+
+.songBody td{background-color:none;}
+.songBody tr:hover td{background-color:#aaa;}
+/*********generalAccordian**********/
+#generalAccordian{padding:1em;}
+
+#tabMenu2 {margin:0;padding:0 0 0 0;list-style:none;font-size:16px;}
+#tabMenu2 li {float:left;padding:4px 0/*4px*/;cursor:pointer;cursor:hand;width:25%;
+	/*border-top:#000 solid 2px;border-left:#000 solid 2px;border-right:#000 solid 2px;*/color:#fff;}
+#tabMenu2 li p{margin-left:6px;}
+
+#tabMenu2 li.mouseover {background-color:#aaa;}
+#tabMenu2 li.mouseout {}
+#tabMenu2 li.selected2 {background-color:#555;}
+
+#tabMenu2 .songAccordian{}
+.boxBody2 {background-color:#f9f6ec;clear:left;padding-top:10px;
+	border-style:solid;
+	border-color:#cacaca;
+	border-width:1px;
+	border-top:none;}
+
+.boxBody2 div.parent2 {display:none;}
+.boxBody2 div.show2 {display:block;}
+
+#tabMenu2 li:nth-of-type(1n){background-color:#1998ab;}
+#tabMenu2 li:nth-of-type(2n){background-color:#189487;}
+#tabMenu2 li:nth-of-type(3n){background-color:#138096;}
+#tabMenu2 li:nth-of-type(4n){background-color:#dd9c48;}
+#tabMenu2 li:nth-of-type(5n){background-color:#b45653;}
+#tabMenu2 li:nth-of-type(6n){background-color:#c0baa8;}
+
+#tabMenu2 li.selected2 {box-shadow: 0px 0px 5px #000;}
+
+#concerts{padding:.2em 15px;}
+#concertTable{width:100%;vertical-align:top;}
+#concertTable td{padding:2px;}
+/*.concertDate{width:10%;}*/
+/*.concertVenue{width:40%;}*/
+/*.concertLocation{width:40%;}*/
+.concertTags{/*width:20%;*/text-align:right;}
+.concertInfo{/*width:30%;*/text-align:right;}
+.concertInfo button{padding:2px 6px;background-color:#1998ab;cursor:pointer;border-radius: 0;border:none;color:#fff;}
+
+#merch{padding-left:15px;/*border-bottom:2px solid #000;*/}
+#merch dl{display:inline-block;/*background-color:#f2f2f2;*/width:120px;text-align:center;margin:1em 2em;}
+.merchTitle{}
+#merch dl span{padding:2px;vertical-align: bottom;}
+#merch dl span button{padding:1px 2px;}
+#merch button{border:none;border-radius: none; background-color:#1998ab;color:#fff; cursor:pointer; padding:2px;}
+
+
+#contact{padding-left:15px;/*border-bottom:2px solid #000;*/}
+#contact li{display:inline-block;text-align:center;margin:1em 1em;}
+#contact li a{/*background-color:#1998ab;*/ color:#000; padding:2px;cursor: pointer;}
+#contact li a:hover{text-decoration: underline;}
+
+#similarMusicians{padding-left:15px;}
+#similarMusicians dl{display:inline-block;text-align:center;margin:1em 2em; width:120px;}
+
+
+/* --------------------------- Right body ------------------------------- */
+/*********projectSummary**********/
+#projectSummary{padding:1em;text-align:center;}
+#projectSummary h2{}
+#projectSummary p{}
+#projectSummary iframe{margin-top:1em;}
+
+/*********projectAccordian**********/
+#projectAccordian{padding:1em;}
+
+
+#tabMenu3 {margin:0;padding:0 0 0 0;list-style:none;font-size:16px;}
+#tabMenu3 li {float:left;padding:4px 0;cursor:pointer;cursor:hand;width:50%;
+	/*border-top:#000 solid 2px;border-left:#000 solid 2px;border-right:#000 solid 2px;*/color:#fff;}
+#tabMenu3  li p{margin-left:6px;}
+
+#tabMenu3 li:nth-of-type(1n){background-color:#138096;}
+#tabMenu3 li:nth-of-type(2n){background-color:#1998ab;}
+
+#tabMenu3 li.selected3 {box-shadow: 0px 0px 5px #000;}
+
+#tabMenu3 .songAccordian{}
+.boxBody3 {background-color:#f9f6ec;clear:left;padding-top:10px;
+	border-style:solid;
+	border-color:#cacaca;
+	border-width:1px;
+	border-top:none;}
+
+.boxBody3 div.parent3 {display:none;}
+.boxBody3 div.show3 {display:block;}
+.boxBody3 .albumInfo{float:right;margin-right:10px;text-align:center;}
+.boxBody3 div table {text-align:left;width:60%;margin:0 0 0 15px;}
+.boxBody3 div table td {padding:2px 2px;cursor:hand;}
+/*.generalBlock div table tr:last-of-type:tr {border-bottom:none}*/
+
+.boxBody3 td button{border:1px solid #000;display:block;width:16px;height:16px;cursor:pointer;background-color: #1998ab;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px; /* future proofing */
+	-khtml-border-radius: 4px; /* for old Konqueror browsers */}
+.boxBody3 td button:active{position:relative;top:1px;}
+.boxBody3 td .play{}
+.boxBody3 td .add{}
+.boxBody3 td .download{display:inline;width: auto;padding:0 2px;line-height:100%;color:#555;}
+.parent3 div{padding:1em;}
+
+.boxBody3 #stats ul{list-style:none;width:50%;display:inline-block;}
+.boxBody3 #stats ul .big{font-size:20px;padding-top:4px;}
+.boxBody3 #stats ul .small{font-size:14px;}
+.boxBody3 #stats button{width:40%;display:inline-block;float:right;margin:20px auto;padding:1.75em 1em;background-color:#1998ab;color:#fff;border:none;cursor: pointer;}
+.boxBody3 #stats button .small{font-size:10px;}
+
+.boxBody3 #updates ul{/*list-style: none;*/margin-left:1em;}
+.boxBody3 #updates li{line-height:200%}
+
+/*********DonationPrizes**********/
+#DonationPrizes{padding:1em;}
+
+#DonationPrizes h3{background-color:#138096;text-align:center;color:#000;}
+#DonationPrizes table{border-collapse: collapse;width:100%;}
+#DonationPrizes tr{border-bottom: solid #aaa 1px;height:50px;}
+#DonationPrizes tr:last-of-type{border-bottom: solid #cacaca 1px;}
+#DonationPrizes td{position:relative;padding:.5em;}
+#DonationPrizes .img{border-left:1px solid #cacaca;}
+#DonationPrizes .name{}
+/*#DonationPrizes .whyCantIPositionThingsInTablesRiotPlz{position:relative;margin:0;display:block;background-color:blue;height:100%;}*/
+#DonationPrizes .small{position:absolute;bottom:0;left:7px;/*vertical-align: bottom; float:left;*/font-size:10px;}
+#DonationPrizes .price{text-align:right;font-size:20px;border-right:1px solid #cacaca}
+
+/* --------------------------- footer ----------------------------- */
+#footerWrap{
+	/*border-top: 2px solid #000;*/
+	clear: both;
+	/*background-color:#F9F6EC;*/
+	/*opacity: .8;*/
+	
+}
+#footer{
+	text-align:center;
+	width: 1200px;
+	margin:5px auto;
+
+}
+#footer a{
+	color:#555;
+	font-size:12px;
+	display:inline-block;
+	margin:/*5px*/24px 12px 5px 12px;
+	padding:2px 3px;
+	float:center;
+	width:75px;
+}
+#footer a:hover{
+	/*background-color:#f2f2f2;*/
+	/*transition:.2s linear;
+	-webkit-transition:.2s linear; /*shadow or underline*//*
+	-moz-transition:.2s linear;
+	box-shadow: 0px 0px 12px #6EA2DE;*/
+	text-decoration:underline;
+}
+body{
+	/*background-color:#F9F6EC;*/
+	padding:0;
+	margin:0;
+}

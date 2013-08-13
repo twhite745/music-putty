@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+    <title>Music Putty</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css.css" />
+    <script src="jquery-1.4.2.js" type="text/javascript"></script>
+    <script src="jquery.watermarkinput" type="text/javascript"></script>
+    <script src="staticJ.js" type="text/javascript"></script>
+    <script src="standard.js" type="text/javascript"></script>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+</head>
+
+<body>
+<div id="wrap">
+   <div id="player">
+	<div id="playerTop"><a href="#">Player</a></div>
+	<iframe width="200" height="180" src="http://www.youtube.com/embed/r8JcvqCDvwY?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+    </div>    
+    <div id="header">
+	<div id="logo">
+	    <a href="http://www.neopets.com"><img src="logo.png" height="42" width="300" /></a><!--height 90-->
+	</div>
+	<div id="navRight">
+	    <ul>
+		<li class="nav"><a class="signupButton" href="#">Sign up</a></li>					
+		<li class="nav"><span class="cursorPointer"><span  onclick="revealLogin()" class="loginButton"><a>Login</a></span></span>
+		<ul id="loginLiReveal" class="shadow"> 
+			<form id="loginForm" method="post" action="bookswap3.0 - loginTestorError.php">
+				Username:
+				<input class="loginFieldCS" name="usernameEmailLogin" type="text" value="" />
+				Password:
+				<input class="loginFieldCS" name="passwordLogin" type="password" value="" /><br />
+				<input class="loginCheckboxCS" type="checkbox" name="rememberMe" /><span class="rememberMe"> Remember me?</span><br />
+				<input id="loginSubmit" type="submit" value="Login" /><br />
+				<li><a href="#" class="forgotPassword">Forgot Username/Password?</a></li>
+			</form>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	<div id="navigation">
+	    <form method="post" action="page.php">
+		<ul>   
+		    <li class="nav"><a href="./profile/profile.html">What is Music Putty?</a></li>
+		    <li class="nav"><a href="#">Browse musicians</a></li>
+		    <li class="navSearch"><input class="searchBar" name="search" type="text" value="" placeholder="Search by name, genre, location..." />
+		    <span class="cursorPointer"><input class="searchButton" name="button" type="button" value="Search" /></span></li>
+		</ul>
+	    </form> 
+	</div>
+    </div>
+</div>
+<div class="backgroundColor">
+    <div id="body1" class="backgroundColor">
+	<div class="bannerLeft">
+	    <a href="#" class="bannerCenterText">Try our QuickPlayer!</a>
+	    <div id="orDiv" class="rotateOR">OR</div>
+	</div>
+	<div class="bannerBoxes">
+	    <a href="#" class="bannerCenterText">Browse Musicians</a>
+	</div>
+	<div class="bannerBoxes">
+	    <a href="#" class="bannerCenterText">Support Musicians</a>
+	</div>
+	<div class="bannerBoxes">
+	    <a href="#" class="bannerCenterText">Recieve Thank Yous</a>
+	</div>
+
+    </div>
+    <div id="bodyPlayer" class="backgroundColor">
+	<div class="playerBannerBoxes">
+	    <div id="genrePick" class="genreLocationPick">
+		<h2 class="pickTitle">Genre:</h2>
+		<p id="genreSearchExpandButton" class="searchWrap">
+		 <img src="searchIcon.png" class="searchIcon" height="14" width="14" />
+		    <input id="s1" type="text" name="q" size="21" maxlength="80" placeholder="Search for a genre..." />    
+		</p>
+		<button class="gButton">Rock</button>
+		<button class="gButton">Alternative</button>
+		<button class="gButton">Blues</button>
+		<button class="gButton">New Age</button>
+		<button class="gButton">Metal</button>
+		<button class="gButton">Fusion Jazz</button>
+		<button class="gButton">Ambience</button>
+		<button class="gButton">Hip Hop</button>		
+		<button class="gButton">Electronic</button>
+		<button class="gButton">Hard Rock</button>
+		<button class="gButton">Rap</button>
+		<button class="gButton">Religious</button>
+		<button class="gButton">Classical</button>
+		<button class="gButton">Whale Sounds</button>
+		<button class="gButton">Jazz</button>	
+		<button class="gButton">Bluegrass</button>
+		<button class="gButton">Country</button>	
+	    </div>
+	</div>	
+	<div class="playerBannerBoxes">	
+	    <div id="locationPick" class="genreLocationPick">
+		<h2 class="pickTitle">Location:</h2>
+		<p id="locationSearchExpandButton" class="searchWrap"><img src="searchIcon.png" class="searchIcon" height="14" width="14" />
+		    <input id="s2" type="text" name="q" size="21" maxlength="100" placeholder="Search for a location..." /></p>
+		<button class="gButton">Bay area</button>
+		<button class="gButton">New York</button>
+		<button class="gButton">Huston</button>
+		<button class="gButton">Seattle</button>
+		<button class="gButton">L.A.</button>
+		<button class="gButton">Atlantis</button>
+		<button class="gButton">Hawaii</button>
+		<button class="gButton">Portland</button>		
+		<button class="gButton">San Jose</button>
+		<button class="gButton">Boston</button>
+		<button class="gButton">Vancoover</button>
+		<button class="gButton">Dallas</button>
+		<button class="gButton">Antarctica</button>
+		<button class="gButton">Berlin</button>
+		<button class="gButton">Paris</button>	
+		<button class="gButton">Whale land</button>
+		<button class="gButton">Place</button>	
+	    </div>
+	</div>    
+	<div class="playerBannerBoxes">
+	    
+	</div>
+    </div>	
+<div id="body2" class="backgroundColor">
+    <div class="featured">
+	<a href="#" class="bandPic"><img src="./bandPics/Tim.png" height="280" width="280" /></a>
+	<input id="Play1" class="playButton" type="image" src="./bandPics/PlayButton.png" onclick="StartOrStop('RAMPART.mp3', 1)" height="44" width="44" />
+	<a href="http://www.reddit.com" class="bandName">Timothy Jackson Scott</a> 
+	<a href="#"><img class="progressMeter" src="./bandPics/Progress.png" height="18" width="260" /></a>  
+	<a href="#" class="funded">Funded: 100$</a>
+	<a href="#" class="goal">Goal: 200$</a>
+	<a href="http://www.runescape.com" class="project">Project: Album</a>
+	<a href="http://www.runescape.com" class="location"><img class="genrePic" src="./bandPics/Location.png" height="16" width="10" />New Hampshire</a>
+	<a href="http://www.neopets.com" class="genre"><img class="genrePic" src="./bandPics/Genre.png" height="16" width="10" />Rock - Folk - Blues</a>
+    </div>
+    <div class="featured">
+	<a href="#"><img src="./bandPics/Picture.png" height="280" width="280" /></a>
+	<input id="Play2" class="playButton" type="image" src="./bandPics/PlayButton.png" onclick="StartOrStop('StrongHold.mp3', 2)" height="44" width="44" />	    
+	<a href="http://www.reddit.com" class="bandName">Picture Atlantic</a>
+	<a href="#"><img class="progressMeter" src="./bandPics/Progress.png" height="18" width="295" /></a>	    
+	<!--<a href="#" class="fundGoalProjBig">$200</a><a href="#" class="fundGoalProjBig">$400</a><a href="#" class="fundGoalProjBig">Album</a>-->
+	<a href="#" class="funded">Funded: 10,000$</a>
+	<a href="#" class="goal">Goal: 20,000$</a>
+	<a href="http://www.runescape.com" class="project">Project: Tour</a>
+	<a href="http://www.runescape.com" class="location"><img class="genrePic" src="./bandPics/Location.png" height="16" width="10" />San Jose</a>
+	<a href="http://www.neopets.com" class="genre"><img class="genrePic" src="./bandPics/Genre.png" height="16" width="10" />Rock - Indie Rock - Acoustic</a>	    
+    </div>    
+    <div class="featured">
+	<a href="#"><img src="./bandPics/Strata.png" height="280" width="280" /></a>
+	<input id="Play3" class="playButton" type="image" src="./bandPics/PlayButton.png" onclick="StartOrStop('IndGRFull.mp3', 3)" height="44" width="44" />	    
+	<a href="http://www.reddit.com" class="bandName">Strata</a>
+	<a href="#"><img class="progressMeter" src="./bandPics/Progress.png" height="18" width="295" /></a>
+	<!--<a href="#" class="fundGoalProjBig">$200</a><a href="#" class="fundGoalProjBig">$400</a><a href="#" class="fundGoalProjBig">Album</a>-->
+	<a href="#" class="funded">Funded: 2,000$</a>
+	<a href="#" class="goal">Goal: 4,000$</a>
+	<a href="http://www.runescape.com" class="project">Project: Music Video</a>
+	<a href="http://www.runescape.com" class="location"><img class="genrePic" src="./bandPics/Location.png" height="16" width="10" />San Jose</a>
+	<a href="http://www.neopets.com" class="genre"><img class="genrePic" src="./bandPics/Genre.png" height="16" width="10" />Rock - Indie Rock - Electronic</a>
+    </div>
+    <div class="featured">
+	<a href="#" class="bandPic"><img src="./bandPics/Tim.png" height="280" width="280" /></a>
+	<input id="Play1" class="playButton" type="image" src="./bandPics/PlayButton.png" onclick="StartOrStop('RAMPART.mp3', 1)" height="44" width="44" />
+	<a href="http://www.reddit.com" class="bandName">Timothy Jackson Scott</a> 
+	<a href="#"><img class="progressMeter" src="./bandPics/Progress.png" height="18" width="260" /></a>  
+	<a href="#" class="funded">Funded: 100$</a>
+	<a href="#" class="goal">Goal: 200$</a>
+	<a href="http://www.runescape.com" class="project">Project: Album</a>
+	<a href="http://www.runescape.com" class="location"><img class="genrePic" src="./bandPics/Location.png" height="16" width="10" />New Hampshire</a>
+	<a href="http://www.neopets.com" class="genre"><img class="genrePic" src="./bandPics/Genre.png" height="16" width="10" />Rock - Folk - Blues</a>
+    </div>  
+</div>
+<div id="footerWrap" class="backgroundColor">
+    <div id="footer">	
+	<a href="#">About us</a>
+	<a href="#">Contact</a>
+	<a href="#">FAQ</a>
+	<a href="#">Legal</a>
+	<a href="#">Support Us</a>
+    </div>
+</div>
+</div>
+<audio id="myAudio">
+  <source src="" type="audio/mpeg" />
+  <source src="" type="audio/ogg" />
+  <embed src="" />
+</audio>
+
+</body>
+</html>
