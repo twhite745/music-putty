@@ -284,26 +284,26 @@ html { -webkit-font-smoothing: antialiased; }
 	font-family: "HELVETICA-NEUE", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight:bold;
 			background-color:none;
-	background-image: url(./bannerBoxes/yellow.png);
+	background-image: url(../images/yellow.png);
  background-size: 100% 100%;
 }
 .bannerBoxes:nth-of-type(2){
 	/*background-color:#439c68;*/
 			background-color:none;
-	background-image: url(./bannerBoxes/blue.png);
+	background-image: url(../images/blue.png);
 	 background-size: 100% 100%;
 }
 .bannerBoxes:nth-of-type(3){
 	/*background-color:#69afb4;*/
 		background-color:none;
-	background-image: url(./bannerBoxes/green.png);
+	background-image: url(../images/green.png);
 	 background-size: 100% 100%;
 }
 .bannerBoxes:last-of-type{
 	/*border-right:none;*/
 	/*background-color:#c95a57;*/
 	background-color:none;
-	background-image: url(./bannerBoxes/red.png);
+	background-image: url(../images/red.png);
 	 background-size: 100% 100%;
 }
 .bannerBoxes{
