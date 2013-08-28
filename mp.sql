@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.32, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: musicPutty
 -- ------------------------------------------------------
--- Server version	5.5.32
+-- Server version	5.5.32-0ubuntu0.13.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `album`;
 CREATE TABLE `album` (
   `aID` int(11) NOT NULL AUTO_INCREMENT,
   `bID` int(11) NOT NULL,
-  `title` varchar(30) DEFAULT NULL,
+  `aName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`aID`),
   KEY `a_FK_band` (`bID`),
   CONSTRAINT `a_FK_band` FOREIGN KEY (`bID`) REFERENCES `band` (`bID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `album` (
 
 LOCK TABLES `album` WRITE;
 /*!40000 ALTER TABLE `album` DISABLE KEYS */;
-INSERT INTO `album` VALUES (1,1,'Fairytale Land Part 1');
+INSERT INTO `album` VALUES (1,1,'Fairytale Dank'),(2,1,'here we GO!?'),(3,2,'babynames,ladygames');
 /*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,9 +51,9 @@ DROP TABLE IF EXISTS `band`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `band` (
   `bID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) DEFAULT NULL,
+  `bName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`bID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `band` (
 
 LOCK TABLES `band` WRITE;
 /*!40000 ALTER TABLE `band` DISABLE KEYS */;
-INSERT INTO `band` VALUES (1,'The Babyracers');
+INSERT INTO `band` VALUES (1,'The Babyracers'),(2,'iggy and his boys');
 /*!40000 ALTER TABLE `band` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,7 +77,7 @@ CREATE TABLE `member` (
   `mID` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`mID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,13 +100,13 @@ CREATE TABLE `song` (
   `sID` int(11) NOT NULL AUTO_INCREMENT,
   `aID` int(11) NOT NULL,
   `bID` int(11) NOT NULL,
-  `name` varchar(30) DEFAULT NULL,
+  `sName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`sID`),
   KEY `FK_band` (`bID`),
   KEY `FK_album` (`aID`),
   CONSTRAINT `FK_album` FOREIGN KEY (`aID`) REFERENCES `album` (`aID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_band` FOREIGN KEY (`bID`) REFERENCES `band` (`bID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `song` (
 
 LOCK TABLES `song` WRITE;
 /*!40000 ALTER TABLE `song` DISABLE KEYS */;
-INSERT INTO `song` VALUES (1,1,1,'Grieg\'s Tune');
+INSERT INTO `song` VALUES (1,1,1,'Grieg\'s Tune'),(3,1,1,'play it again bby'),(4,2,1,'hi'),(5,2,1,'bye'),(6,2,1,'seeya'),(7,3,2,'baby'),(8,3,2,'names'),(9,3,2,'lady'),(10,3,2,'games');
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -128,4 +128,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-08-19  0:04:18
+-- Dump completed on 2013-08-27 23:05:07
