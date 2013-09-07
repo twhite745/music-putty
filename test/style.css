@@ -1,0 +1,49 @@
+html,body {
+margin:0;padding:0;
+}
+#play-bar {
+background:black;
+color:white;
+text-align:center;
+}
+#content {
+width:1300px;
+margin:auto;
+}
+.play img {
+width:100px;
+height:100px;
+}
+.play {
+width:300px;
+display:block;
+float:left;
+margin: 30px auto;
+overflow:hidden;
+background:#ddd;;
+margin:5px;
+padding:5px;
+}
+.play * {
+display:block;
+}
+.play song {
+color:green;
+}
+.play album {
+color:red;
+font-size:13pt;
+}
+
+.play band {
+color:gray;
+}
+.play .info {
+width:199px;
+float:left;
+}
+
+.play .art {
+width:100px;
+float:right;
+}

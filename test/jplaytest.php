@@ -7,40 +7,59 @@ mysqli_select_db("musicPutty");
 
 $result=mysqli_query($con,"SELECT song.sID,song.aID,song.bID,song.sName,album.aName,band.bName FROM song
                               LEFT JOIN album ON album.aID=song.aID
-                              LEFT JOIN band ON band.bID=song.bID");
+                              LEFT JOIN band ON band.bID=song.bID LIMIT 8");
 ?>
 <html>
 <head>
+<link rel="stylesheet" href="style.css"></link>
+<audio id="player"> </audio>
 </head>
-while ($row = mysqli_fetch_row($result)) {
-//0:sID
-//1:aID
-//2:bID
-//3:song
-//4:album
-//5:band
-echo ("<p bID=".$row[2].">" . $row[5] . " - " . $row[3] . " - " . $row[4] . "</p>");
-}
-<?php
-   while ($row = mysqli_fetch_assoc($result)) {
-      $rows[] = $row;
-      echo ("<p sID=".$row["sID"].">" . $row['bName'] . " - " . $row['aName'] . " - " . $row['sName'] . "</p>");
-   }
-   $json=json_encode($rows);
-   file_put_contents("request.json", $json);
+<body>
+<div id="play-bar"><pop>pause</pop> - <song></song> - <album></album> - <band></band></div>
+<div id="content">
+
+<?php 
+  class BandTile {
+    public $bID;
+    public $bName;
+    public $image;
+    public $html;
+    
+    public function __construct($aArray) {
+      $this->bID = $aArray["bID"];
+      $this->bName = $aArray["bName"];
+      $this->image = "/media/".$this->bID."/".$this.->bID."-image.jpg";
+      $this->html = "<div class='bandTile'><play-button></play-button><h1>"
+                    . $this->bName
+                    . "</h1><img src='"
+                    . $this->image
+                    . "' /></div>"
+    }
+    public function generateTile() {
+      echo($this->html);
+    }
 ?>
 
 
 
-<body>
-   <div id="play-bar">hi</div>
-   <div id="j" style="position:absolute;left:0;right:0,height:100px"></div>
-   <div id="play-button">click 2 play</div>
-   <div id="changed-thing">i am not playing</div>
-   <audio id="player">
-      <source src="/media/sound1.mp3">
-      <source src="/media/sound1.ogg">
-   </audio>
+<?php
+   while ($row = mysqli_fetch_assoc($result)) {
+      $rows[] = $row;
+      printf("<div class='play' data-pathLoaded=0 data-sID='%s' data-bID='%s' data-aID='%s'>
+                 <div class='info'>
+                    <song>%s</song><album>%s</album><band>%s</band>
+                 </div>
+                 <div class='art'>
+                    <img src='/media/%s/%s/%s.jpg' />
+                 </div>
+              </div>", $row["sID"], $row["bID"], $row["aID"], 
+                       $row["sName"],$row["aName"], $row["bName"], 
+                       $row["bID"], $row["aID"], $row["aID"]);
+   }
+?>
+
+
+</div>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/js/jPlayer/jquery.jplayer.min.js"></script>
