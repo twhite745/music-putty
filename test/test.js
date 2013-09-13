@@ -19,9 +19,9 @@ $('#changed-thing').click(function() {
 $('.play').click(function() {
   last = sel;
   sel = $(this);
-  sID = sel.attr('data-sid');
-  aID = sel.attr('data-aid');
-  bID = sel.attr('data-bid');
+  sID = sel.attr('sID');
+  aID = sel.attr('aID');
+  bID = sel.attr('bID');
   sTile = sel.find('song');
   aTile = sel.find('album');
   bTile = sel.find('band');

@@ -17,7 +17,7 @@
         </body>
         <script src="/js/jquery-1.10.2.min.js"></script>
         <script src="/js/jPlayer/jquery.jplayer.min.js"></script>
-        <script src="test2.js"></script>
+        <script src="script.js"></script>
         </html>';
   }
 
@@ -80,22 +80,23 @@
 
   //DRAW: generates htm of one item.
   function generateSong($songArray) {
-    return "<tr sID=".$songArray["sID"]."><td class='name'>".$songArray["sName"]."</td></tr>";
+    return "<tr data-src='/media/".$songArray["bID"]."/".$songArray["aID"]."/".$songArray["sID"]."'><td class='name'>".$songArray["sName"]."</td></tr>";
   }
 
   function generateAlbum($albumArray) {
     $con = dbConnect();
     $songs = getSongsByAlbum($albumArray["aID"]);
-    return "<div class='album' aID=".$albumArray["aID"].">
+    return "<div class='album' data-bName=".$albumArray["bName"].">
               <h1>".$albumArray["aName"]."</h1>
-              <img ".generatePathToAlbumArt($albumArray["bID"],$albumArray["aID"])."/>
+              <img src='".generatePathToAlbumArt($albumArray["bID"],$albumArray["aID"])."' />
               <table>".generateSongs($songs)."</table>
             </div>";
     mysqli_close($con);
   }
-
+//TODO: get data-sample-aName and sName working somehow so js can have the sample's track info
   function generateBand($bandArray) {
-    $html = "<div class='band' bID=".$bandArray["bID"].">
+    $html = "<div class='band play' data-sample-aName='noaName' data-sample-sName='nosName' data-src='/media/".$bandArray["bID"]."/sample' >
+               <playButton>playme</playButton>
                <h1>".$bandArray["bName"]."</h1>
                <img src='".generatePathToBandArt($bandArray["bID"])."' />
              </div>";
