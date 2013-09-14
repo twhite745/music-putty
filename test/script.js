@@ -16,3 +16,4 @@ var AlbumTile = function(domElement) {
 	this.sName = domElement.find("tr:first td.name").html();
 	this.aName = domElement.find("h1").html();
 	this.bName = domElement.attr("data-bName");
+}
