@@ -3,16 +3,15 @@
    <head>
    
       <link rel="stylesheet" href=<?php echo $CSS; ?>style.css />
+      <link rel="stylesheet" href=<?php echo $CSS; ?>bootstrap.min.css />
    
    </head>
 
    <body>
       <div id="play-bar"><pop>pause</pop> - <song></song> - <album></album> - <band></band></div>
-      <div id="content">
+      <div id="content" class="col-md-8 col-md-offset-2 col-sm-12">
          <?php echo $this->render($content,$this->mime,get_defined_vars()); ?>
       </div>
-   
-      <div onclick="jax()">div click</div>
       <a href="browse">a href</a>
       <a href="//google.com">bands</a>
    

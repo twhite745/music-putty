@@ -3,16 +3,15 @@
    <head>
    
       <link rel="stylesheet" href={{@CSS}}style.css />
+      <link rel="stylesheet" href={{@CSS}}bootstrap.min.css />
    
    </head>
 
    <body>
       <div id="play-bar"><pop>pause</pop> - <song></song> - <album></album> - <band></band></div>
-      <div id="content">
+      <div id="content" class="col-md-8 col-md-offset-2 col-sm-12">
          <include href="{{@content}}" />
       </div>
-   
-      <div onclick="jax()">div click</div>
       <a href="browse">a href</a>
       <a href="//google.com">bands</a>
    

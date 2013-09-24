@@ -1,7 +1,14 @@
 $(document).ready(function() {
+   var State = History.getState();
+      jQuery.post(State.url, function() {
+         console.log(State.url);
+   });
    History.Adapter.bind(window,'statechange',function() {
-      var State = History.getState();
-      $('content').load(State.url);
+      State = History.getState();
+      $('#content').load(State.url);
+      jQuery.post(State.url, function() {
+         console.log(State.url);
+   });
    });
 });
 
