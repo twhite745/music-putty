@@ -7,5 +7,4 @@ $f3->set('db', new DB\SQL(
     'hello'
 ));
 $f3->run();
-
 ?>

@@ -1,14 +1,23 @@
 <?php
 class Requests {
 
-	
-  function getBands() {
-    $a = 3;
-    F3::set('result',F3::get('db')->exec('SELECT * FROM album'));
-    $b = F3::get('result');
+  static function queryBands() {
+    $db = F3::get('db');
+    F3::set('result', $db->exec('SELECT * FROM band LIMIT 10 OFFSET 0'));
+  }
+
+  static function getBandsJSON() {
+    Requests::queryBands();
+    return json_encode(F3::get('result'));
+  }
     
-    var_dump ($b);
- }
+
+  static function queryAlbums() {
+    $db = F3::get('db');
+    F3::set('result', $db->exec("SELECT album.aID,album.aName,album.bID,band.bName FROM album
+                                 LEFT JOIN band ON band.bID = album.bID"));
+  }
+
 /*
   static function getSongs() {
     $con = dbConnect();
