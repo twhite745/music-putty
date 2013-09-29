@@ -3,12 +3,14 @@ class Requests {
 
   static function queryBands() {
     $db = F3::get('db');
-    F3::set('result', $db->exec('SELECT * FROM band LIMIT 10 OFFSET 0'));
+    F3::set('result', $db->exec('SELECT * FROM band LEFT JOIN song ON band.sampleID=song.sID 
+                                                    LEFT JOIN album ON album.aID=song.aID
+                                                    LIMIT 10 OFFSET 0'));
   }
 
-  static function getBandsJSON() {
+  static function JSONBands() {
     Requests::queryBands();
-    return json_encode(F3::get('result'));
+    echo json_encode(F3::get('result'));
   }
     
 
