@@ -1,3 +1,3 @@
 <?php foreach (($result?:array()) as $band): ?>
-<p><?php echo $band['bName']; ?></p>
+<?php echo $this->render('templates/bandBadge.html',$this->mime,get_defined_vars()); ?>
 <?php endforeach; ?>

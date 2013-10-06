@@ -1,48 +1,54 @@
 html,body {
 margin:0;padding:0;
+font-family: 'Droid Sans', sans-serif;
+width:100%;
 }
+
+.bordered {
+   border:1px solid #555;
+}
+
+.centered {
+   margin:0px auto;
+}
+
+/*PLAY BAR*/
 #play-bar {
 background:black;
 color:white;
 text-align:center;
 }
-#content {
-display:block;
-}
-.play img {
-width:100px;
-height:100px;
-}
-.play {
-width:300px;
-display:block;
-float:left;
-margin: 30px auto;
-overflow:hidden;
-background:#ddd;;
-margin:5px;
-padding:5px;
-}
-.play * {
-display:block;
-}
-.play song {
+#play-bar song {
 color:green;
 }
-.play album {
+#play-bar album {
 color:red;
 font-size:13pt;
 }
 
-.play band {
+#play-bar band {
 color:gray;
+width:100%;
+height:1000px;
 }
-.play .info {
-width:199px;
+#content {
+   clear:both;
+}
+.bandBadge {
+width:200px;
+display:block;
 float:left;
+margin: 30px auto;
+overflow:hidden;
+border: solid 1px;
+margin:5px;
+text-align:center;
 }
-
-.play .art {
-width:100px;
-float:right;
+.bandBadge img {
+width:200px;
+height:200px;
+}
+.bandBadge band {
+   width:100%;
+   font-size: 1.25em;
 }
