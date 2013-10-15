@@ -36,5 +36,6 @@
    </script-->
 
    <script src=<?php echo $JS; ?>base.js></script>
+   <script src=<?php echo $JS; ?><?php echo $page; ?>.js></script>
 
 </html>

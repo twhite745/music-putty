@@ -1,4 +1,5 @@
 <?php
+
 class Browse {
    function display() {
       Requests::queryBands();
