@@ -69,16 +69,6 @@ Queue.prototype.remove = function(idx) {
    this.data.splice(idx, 1);
 }
 
-Queue.prototype.load = function(songArray, idx) {
-   if (idx === undefined) {
-      this.clear();
-      var idx = 0;
-   }
-   for (var i = songArray.length; i > 0; i++) {
-      this.add(songArray[i],idx);
-   }
-}
-
 var ViewableQueue = function(domElement) {
    Queue.call(this);
    this.domElement = domElement;
@@ -90,6 +80,9 @@ ViewableQueue.prototype.add = function(song,insertIdx) {
    var empty = this.empty();
    var i = 0;
    var j = 0;
+   var json = JSON.stringify(song);
+   var domElement = this.domElement;
+   var jquerySelector = this.domElement.get(0).tagName + ' queueitem:eq(0)';
    if (!(song instanceof Array)) {
       var song = [song];
    }
@@ -103,17 +96,19 @@ ViewableQueue.prototype.add = function(song,insertIdx) {
       return false;
    }
    var idx = Queue.prototype.add.call(this,song,insertIdx);
+   console.log(idx);
    if (empty) {
-      this.domElement.html('<queueitem>'+song[i].bandName +'</queueitem>');
-      i++;
+      jQuery.post('/generateQueue',JSON.stringify(song), function(data) {
+         console.log(data);
+         domElement.html(data);
+      });
    }
-   for (i; i < length; i++) {
-      this.jquerySelector = this.domElement.get(0).tagName + ' queueitem:eq('+(idx + i - 1) +')';
-      $(this.jquerySelector).after('<queueitem>'+song[i]['bandName'] + '</queueitem>');
-      console.log('not empty...');
-      console.log(i);
-      console.log(song[i]);
-      console.log(song[i].bandName);
+   else {
+      jQuery.post('/generateQueue',JSON.stringify(song), function(data) {
+         jquerySelector = domElement.get(0).tagName + ' queueitem:eq('+(idx + 1)+')';
+         console.log(data);
+         $(jquerySelector).after(data);
+      });
    }
 }
 

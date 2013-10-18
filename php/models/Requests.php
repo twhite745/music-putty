@@ -20,5 +20,18 @@ class Requests {
                                  LEFT JOIN band ON band.bID = album.bID"));
   }
 
+  static function generateQueue() {
+     Requests::postifyJSON();
+     $templateDirectory = F3::get('TEMPLATES');
+     echo Template::instance()->render($templateDirectory.'queueItem.html','text/html');
+  }
+
+  static function postifyJSON() {
+     $arr = json_decode(F3::get('BODY'), true);
+     F3::set('POST',$arr);
+
+  }
+   
+
 }
 ?>

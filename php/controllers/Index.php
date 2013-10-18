@@ -6,6 +6,9 @@ class Index {
    function update() {
       Main::update('index.html');
    }
+   function test() {
+      echo "OH MY GOD WHY IS THIS WOKRING";
+   }
 }?>
 
 
