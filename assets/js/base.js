@@ -1,3 +1,4 @@
+//requires jquery, underscore.js
 var audio = $('audio');
 var bar = $('#play-bar');
 var playButton = bar.find('pop');
@@ -6,15 +7,14 @@ var json = 'hi';
 var State = History.getState();
 
 //making arrays iterable, insertable, for queue suitability
-Array.prototype.insert = function(index, arr) {
-   var tmpArr = new Array(arr);
-   if (tmpArr[0] === undefined) {
-      tmpArr = [tmpArr];
-   }
-   tmpArr.splice(0,0,index,0);
-   Array.prototype.splice.apply(this,tmpArr);
-}
-
+Array.prototype.insert = function(index) {
+    index = Math.min(index, this.length);
+    arguments.length > 1
+        && this.splice.apply(this, [index, 0].concat([].pop.call(arguments)))
+        && this.insert.apply(this, arguments);
+    return index;
+};
+        
 Array.prototype.next = function() {
     return this[++this.current];
  }
@@ -22,8 +22,20 @@ Array.prototype.next = function() {
 Array.prototype.prev = function() {
    return this[--this.current];
 }
+   
+Array.prototype.flatten = function() {
+   arr = _.flatten(this);
+}
  
 Array.prototype.current = 0;
+
+Array.prototype.clear = function() {
+   this.splice(0,this.length);
+}
+
+Array.prototype.empty = function() {
+   return !this.length;
+}
 
 Array.prototype.curr = function() {
    return this[this.current];
@@ -44,25 +56,21 @@ var Song = function(bandName, albumName, songName, audioPath, artPath) {
    this.artPath = artPath;
 }
 
+//class QUEUE
 var Queue = function() {
    this.data = new Array();
 }
 
 Queue.prototype.clear = function() {
-   this.data = [];
+   this.data.clear();
 }
 
 Queue.prototype.empty = function() {
-   return this.data.length === 0;
+   return this.data.empty();
 }
 
-Queue.prototype.add = function(song,insertIdx) {
-   var endOfArray = this.data.length;
-   if (insertIdx === undefined) {
-      var insertIdx  = endOfArray;
-   }
-   this.data.insert(insertIdx, song);
-   return insertIdx;
+Queue.prototype.add = function(insertIdx) {
+   return Array.prototype.insert.apply(this.data,arguments);
 }
 
 Queue.prototype.remove = function(idx) {
@@ -74,43 +82,30 @@ var ViewableQueue = function(domElement) {
    this.domElement = domElement;
 }
 
+
 ViewableQueue.prototype = new Queue();
 
-ViewableQueue.prototype.add = function(song,insertIdx) {
+ViewableQueue.prototype.add = function(insertIdx) {
+   //removes insertIdx from arguments array
+   var songsToAdd = _.flatten([].splice.apply(arguments,[0,1]),true);
    var empty = this.empty();
-   var i = 0;
-   var j = 0;
-   var json = JSON.stringify(song);
+   var json = JSON.stringify(songsToAdd);
    var domElement = this.domElement;
-   var jquerySelector = this.domElement.get(0).tagName + ' queueitem:eq(0)';
-   if (!(song instanceof Array)) {
-      var song = [song];
-   }
-   var length = song.length;
-   for (j=0;j<length;j++) {
-      if (!isSong(song[j])) {
-         return false;
-      }
-   }
-   if (insertIdx === NaN) {
-      return false;
-   }
-   var idx = Queue.prototype.add.call(this,song,insertIdx);
-   console.log(idx);
+   var idx = Queue.prototype.add.apply(this,arguments);
    if (empty) {
-      jQuery.post('/generateQueue',JSON.stringify(song), function(data) {
-         console.log(data);
+      jQuery.post('/generateQueue',json, function(data) {
          domElement.html(data);
       });
    }
    else {
-      jQuery.post('/generateQueue',JSON.stringify(song), function(data) {
-         jquerySelector = domElement.get(0).tagName + ' queueitem:eq('+(idx + 1)+')';
-         console.log(data);
-         $(jquerySelector).after(data);
+      jQuery.post('/generateQueue',json, function(data) {
+         jquerySelector = domElement.get(0).tagName + ' queueitem:eq('+idx+')';
+         $(jquerySelector).before(data);
       });
    }
 }
+
+
 
 ViewableQueue.prototype.clear = function() {
    Queue.prototype.clear.call(this);
