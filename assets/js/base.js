@@ -14,6 +14,16 @@ Array.prototype.insert = function(index) {
         && this.insert.apply(this, arguments);
     return index;
 };
+
+Object.prototype.clone = function() {
+  var newObj = (this instanceof Array) ? [] : {};
+  for (i in this) {
+    if (i == 'clone') continue;
+    if (this[i] && typeof this[i] == "object") {
+      newObj[i] = this[i].clone();
+    } else newObj[i] = this[i]
+  } return newObj;
+};
         
 Array.prototype.next = function() {
     return this[++this.current];
@@ -85,47 +95,110 @@ var ViewableQueue = function(domElement) {
 
 ViewableQueue.prototype = new Queue();
 
-ViewableQueue.prototype.add = function(insertIdx) {
-   //removes insertIdx from arguments array
-   var songsToAdd = _.flatten([].splice.apply(arguments,[0,1]),true);
-   var empty = this.empty();
-   var json = JSON.stringify(songsToAdd);
+ViewableQueue.prototype.clear = function() {
    var domElement = this.domElement;
-   var idx = Queue.prototype.add.apply(this,arguments);
+   Queue.prototype.clear.call(this);
+   domElement.html('');
+}
+
+ViewableQueue.prototype.add = function(insertIdx) {
+   var l = this.data.length;
+   var args = _.flatten(arguments);
+   var domElement = this.domElement;
+   var empty = this.empty();
+   var idx = Queue.prototype.add.apply(this,args);
+   args.splice(0,1);
+   _.flatten(args,true);
+   var json = JSON.stringify(args);
    if (empty) {
-      jQuery.post('/generateQueue',json, function(data) {
-         domElement.html(data);
+      idx = 0;
+      domElement.html("<queueItem><song>"+
+                     args[idx].songName +
+                     "</song><album>" +   
+                     args[idx].albumName +
+                     "</album><band>" +   
+                     args[idx].bandName +
+                     "</band><img src='" +
+                     args[idx].artPath +
+                     " /></queueItem>"  
+                     );
+      idx++;
+      //removing the added thing
+      args.splice(0,1);
+
+   }
+   if (idx >= l) {
+      args.forEach(function(val,i,a) {
+         console.log(i);
+         domElement.find('queueItem').eq(idx + i - 1)
+                   .after("<queueItem><song>"+
+                          args[i].songName +
+                          "</song><album>" +   
+                          args[i].albumName +
+                          "</album><band>" +   
+                          args[i].bandName +
+                          "</band><img src='" +
+                          args[i].artPath +
+                          " /></queueItem>");
+         idx++;
       });
    }
    else {
-      jQuery.post('/generateQueue',json, function(data) {
-         jquerySelector = domElement.get(0).tagName + ' queueitem:eq('+idx+')';
-         $(jquerySelector).before(data);
+      args.forEach(function(val,i,a) {
+         console.log(val);
+         domElement.find('queueItem').eq(idx)
+                   .before("<queueItem><song>"+
+                          args[i].songName +
+                          "</song><album>" +   
+                          args[i].albumName +
+                          "</album><band>" +   
+                          args[i].bandName +
+                          "</band><img src='" +
+                          args[i].artPath +
+                          " /></queueItem>");
+         idx++;
       });
    }
+      
+
+                     
+     // jQuery.post('/generateQueue',json, function(data) {
+     //    domElement.html(data);
+     // }).then(alert('first'));
+     // jQuery.post('/generateQueue',json, function(data) {
+   //if (idx < l) {
+   //       domElement.find('queueitem').eq(idx).before(data);
+   //   }
+   //   else {
+   //       domElement.find('queueitem')
+   //          .eq(l - 1).after(data);
+   // }
+   // });
+   //}
 }
 
 
 
-ViewableQueue.prototype.clear = function() {
-   Queue.prototype.clear.call(this);
-   this.domElement.html('');
-}
 
 ViewableQueue.prototype.remove = function(removeIdx) {
    Queue.prototype.remove.call(this,removeIdx);
-   this.jquerySelector = this.domElement.get(0).tagName + ' queueitem:eq('+(removeIdx)+')';
+   this.domElement.find('queueItem').eq(removeIdx).remove();
 }
 
-ViewableQueue.prototype.load = function(songArray, idx) {
-   Queue.prototype.load.call(this, songArray, idx);
+ViewableQueue.prototype.removeLast = function() {
+   ViewableQueue.prototype.remove
+                .call(this, this.data.length - 1);
 }
-   
+
+ViewableQueue.prototype.addLast = function(songs) {
+   ViewableQueue.prototype.add
+                .call(this, this.data.length, arguments);
+}
 
 var Player = function(audioElement, playBar, playlistElement) {
    this.playlist = new ViewableQueue(playlistElement);
    this.currentIdx = 0;
-   this.currentElement = playlistElement.find('queueitem:eq(0)');
+   this.currentElement = playlistElement.find('queueitem').eq(0);
 
    var audioElement = audioElement;
 
@@ -150,6 +223,24 @@ var Player = function(audioElement, playBar, playlistElement) {
       this.currentElement = playlistElement.find('queueitem:eq('+currentIdx+')');
    }
 
+   this.addNext = function() {
+      [].splice.call(arguments,0,0,this.currentIdx + 1);
+      console.log(arguments);
+      ViewableQueue.prototype.add.apply(this.playlist, arguments);
+   }
+
+   this.removeCurrent = function() {
+      ViewableQueue.prototype.remove.call(this.playlist,currendIdx);
+   }
+
+   this.play = function() {
+      this.changeSource('source="' + this.playlist.data[this.currentIdx].audioPath + '"');
+      this.handlePlay();
+   }
+      
+
+
+
 
    this.handlePlay = function() {
       if (audioElement[0].paused) {
@@ -160,10 +251,11 @@ var Player = function(audioElement, playBar, playlistElement) {
       }
    }
 
-   this.setTitle = function(song, album, band) {
-      playBar.find('song').html(song);
-      playBar.find('album').html(album);
-      playBar.find('band').html(band);
+   this.setTitle = function() {
+      var song = this.playlist.data[this.currentIdx];
+      playBar.find('song').html(song.songName);
+      playBar.find('album').html(song.albumName);
+      playBar.find('band').html(song.bandName);
    }
 
    this.setPlay = function() {
