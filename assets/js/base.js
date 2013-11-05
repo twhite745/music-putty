@@ -2,9 +2,16 @@
 var audio = $('audio');
 var bar = $('#play-bar');
 var playButton = bar.find('pop');
-var badges = new Object();
+var badges = [];
 var json = 'hi';
 var State = History.getState();
+
+
+var badge = function(json,queue) {
+   this.json = json;
+   this.queue = queue;
+}
+
 
 //making arrays iterable, insertable, for queue suitability
 Array.prototype.insert = function(index) {
@@ -13,16 +20,6 @@ Array.prototype.insert = function(index) {
         && this.splice.apply(this, [index, 0].concat([].pop.call(arguments)))
         && this.insert.apply(this, arguments);
     return index;
-};
-
-Object.prototype.clone = function() {
-  var newObj = (this instanceof Array) ? [] : {};
-  for (i in this) {
-    if (i == 'clone') continue;
-    if (this[i] && typeof this[i] == "object") {
-      newObj[i] = this[i].clone();
-    } else newObj[i] = this[i]
-  } return newObj;
 };
         
 Array.prototype.next = function() {
@@ -112,16 +109,10 @@ ViewableQueue.prototype.add = function(insertIdx) {
    var json = JSON.stringify(args);
    if (empty) {
       idx = 0;
-      domElement.html("<queueItem><song>"+
-                     args[idx].songName +
-                     "</song><album>" +   
-                     args[idx].albumName +
-                     "</album><band>" +   
-                     args[idx].bandName +
-                     "</band><img src='" +
-                     args[idx].artPath +
-                     " /></queueItem>"  
-                     );
+      domElement.html(queueItemHTML(args[idx].songName,
+                                    args[idx].albumName,
+                                    args[idx].bandName,
+                                    args[idx].artPath));
       idx++;
       //removing the added thing
       args.splice(0,1);
@@ -131,15 +122,10 @@ ViewableQueue.prototype.add = function(insertIdx) {
       args.forEach(function(val,i,a) {
          console.log(i);
          domElement.find('queueItem').eq(idx + i - 1)
-                   .after("<queueItem><song>"+
-                          args[i].songName +
-                          "</song><album>" +   
-                          args[i].albumName +
-                          "</album><band>" +   
-                          args[i].bandName +
-                          "</band><img src='" +
-                          args[i].artPath +
-                          " /></queueItem>");
+                   .after(queueItemHTML(args[i].songName,
+                                        args[i].albumName,
+                                        args[i].bandName,
+                                        args[i].artPath));
          idx++;
       });
    }
@@ -147,36 +133,24 @@ ViewableQueue.prototype.add = function(insertIdx) {
       args.forEach(function(val,i,a) {
          console.log(val);
          domElement.find('queueItem').eq(idx)
-                   .before("<queueItem><song>"+
-                          args[i].songName +
-                          "</song><album>" +   
-                          args[i].albumName +
-                          "</album><band>" +   
-                          args[i].bandName +
-                          "</band><img src='" +
-                          args[i].artPath +
-                          " /></queueItem>");
+                   .before(queueItemHTML(args[i].songName,
+                                        args[i].albumName,
+                                        args[i].bandName,
+                                        args[i].artPath));
          idx++;
       });
    }
-      
-
-                     
-     // jQuery.post('/generateQueue',json, function(data) {
-     //    domElement.html(data);
-     // }).then(alert('first'));
-     // jQuery.post('/generateQueue',json, function(data) {
-   //if (idx < l) {
-   //       domElement.find('queueitem').eq(idx).before(data);
-   //   }
-   //   else {
-   //       domElement.find('queueitem')
-   //          .eq(l - 1).after(data);
-   // }
-   // });
-   //}
 }
 
+var queueItemHTML = function(songName, albumName, bandName, artPath) {
+   var HTMLString = "<queueItem>" +
+                        "<song>"+ songName + "</song>" +
+                        "<album>" + albumName + "</album>" +
+                        "<band>" +   bandName + "</band>" +
+                        "<img src='" + artPath + " />" +
+                     "</queueItem>";
+   return HTMLString;
+}
 
 
 
