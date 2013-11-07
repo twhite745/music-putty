@@ -1,16 +1,9 @@
 //requires jquery, underscore.js
 var audio = $('audio');
-var bar = $('#play-bar');
-var playButton = bar.find('pop');
 var badges = [];
 var json = 'hi';
 var State = History.getState();
 
-
-var badge = function(json,queue) {
-   this.json = json;
-   this.queue = queue;
-}
 
 
 //making arrays iterable, insertable, for queue suitability
@@ -140,6 +133,10 @@ ViewableQueue.prototype.add = function(insertIdx) {
          idx++;
       });
    }
+
+   $('queueitem').on('click',function() {
+      console.log('hi');
+   });
 }
 
 var queueItemHTML = function(songName, albumName, bandName, artPath) {
@@ -169,93 +166,106 @@ ViewableQueue.prototype.addLast = function(songs) {
                 .call(this, this.data.length, arguments);
 }
 
-var Player = function(audioElement, playBar, playlistElement) {
-   this.playlist = new ViewableQueue(playlistElement);
-   this.currentIdx = 0;
-   this.currentElement = playlistElement.find('queueitem').eq(0);
+var player = $('#play-bar');
+player.playlistElement = player.find('playlist');
+player.playlist = new ViewableQueue(player.playlistElement);
+var currentIdx = 0;
+player.currentElement = player.playlistElement.find('queueitem:eq(0)');
+var audioElement = $(document).find('audio');
+var playButton = player.find('pop');
+var song = player.find('song');
+var album = player.find('album');
+var band = player.find('band');
+playButton.on('click', function() {
+   player.handlePlay();
+});
+player.clearPlaylist = function() {
+   this.playlist.clear();
+   currentIdx = 0;
+   player.currentElement = null;
+   player.changeSource("");
+}
+player.updateCurrent = function(idx) {
+   currentIdx = idx;
+   player.currentElement = player.playlistElement.find('queueitem').eq(currentIdx);
+   player.changeSource("<source src='" + player.playlist.data[currentIdx].audioPath + "'/>");
+}
 
-   var audioElement = audioElement;
+player.addSongNext = function() {
+   [].splice.call(arguments,0,0,currentIdx + 1);
+   ViewableQueue.prototype.add.apply(this.playlist, arguments);
+}
 
-   var playBar = playBar;
-   var song = playBar.find('song');
-   var album = playBar.find('album');
-   var band = playBar.find('band');
+player.addSong = function() {
+   ViewableQueue.prototype.add.apply(this.playlist, arguments);
+}
 
-   var playButton = playBar.find("pop");
+player.addSongToEnd = function() {
+   [].splice.call(arguments,0,0,player.playlist.data.length);
+   ViewableQueue.prototype.add.apply(this.playlist, arguments);
+}
 
-   playButton.on('click', function() {
-      handlePlay();
-   });
-
-   this.clearPlaylist = function() {
-      this.playlist.clear();
-      this.updateCurrent(-1);
+player.go = function(offset) {
+   if (currentIdx == player.playlist.data.length - 1 && offset > 0) {
+      player.setStopped();
    }
-      
-   this.updateCurrent = function(idx) {
-      this.currentIdx = idx;
-      this.currentElement = playlistElement.find('queueitem:eq('+currentIdx+')');
+   else if (currentIdx == 0 && offset < 0) {
+      audioElement[0].currentTime = 0;
+   }
+   else {
+      player.updateCurrent(currentIdx + offset);
+      player.setPlaying();
+   }
+}
+   
+   
+
+player.removeCurrent = function() {
+   ViewableQueue.prototype.remove.call(this.playlist,currentIdx);
+}
+
+player.handlePlay = function() {
+   if (audioElement[0].paused) {
+      this.setPlaying();
+   }
+   else {
+      this.setPaused();
+   }
+}
+
+
+player.setTitle = function() {
+   var song = this.playlist.data[this.currentIdx];
+   playBar.find('song').html(song.songName);
+   playBar.find('album').html(song.albumName);
+   playBar.find('band').html(song.bandName);
    }
 
-   this.addNext = function() {
-      [].splice.call(arguments,0,0,this.currentIdx + 1);
-      console.log(arguments);
-      ViewableQueue.prototype.add.apply(this.playlist, arguments);
-   }
-
-   this.removeCurrent = function() {
-      ViewableQueue.prototype.remove.call(this.playlist,currendIdx);
-   }
-
-   this.play = function() {
-      this.changeSource('source="' + this.playlist.data[this.currentIdx].audioPath + '"');
-      this.handlePlay();
-   }
-      
-
-
+player.setPlaying = function() {
+   playButton.html('Playing');
+   $(audioElement[0]).trigger('play');
+   audioElement.trigger('play');
+}
+player.setPaused = function() {
+   playButton.html('Paused');
+   $(audioElement[0]).trigger('pause');
+}
+player.setStopped = function() {
+   $(audioElement[0]).trigger('pause');
+   audioElement[0].currentTime = 0;
+   player.updateCurrent(0);
+   playButton.html('Stopped');
+}
 
 
-   this.handlePlay = function() {
-      if (audioElement[0].paused) {
-         audioElement.trigger('play');
-      }
-      else {
-         audioElement.trigger('pause');
-      }
-   }
-
-   this.setTitle = function() {
-      var song = this.playlist.data[this.currentIdx];
-      playBar.find('song').html(song.songName);
-      playBar.find('album').html(song.albumName);
-      playBar.find('band').html(song.bandName);
-   }
-
-   this.setPlay = function() {
-      playBar.html('Playing');
-      audioElement.trigger('play');
-   }
-   this.setPause = function() {
-      playBar.html('Paused');
-      audioElement.trigger('pause');
-   }
-
-   this.changeSource = function(source) {
-      audioElement.html(source);
-   }
-
+player.changeSource = function(source) {
+   audioElement.html(source);
 }
 
 var Badges = function(Player, domElements) {
    
    var Player = Player;
    var domElements = domElements;
-
-   var loadSong = function(domElement) {
-      Player.changeSource("<source src=" + domElement.json.sPath +" />");
-      Player.setTitle("test" + domElement.json.sName, domElement.json.aName, domElement.json.bName);
-   }
    
    domElements.click(function() {
       loadSong(this);
@@ -277,6 +287,17 @@ $(document).ready(function() {
       json = JSON.parse(data);
       identify_badges();
    });
+   $('.bandBadge').on("click", function() {
+      var bID = this.json["bID"];
+      console.log(bID);
+      player.clearPlaylist();
+      player.addSongNext(this.queue);
+      player.updateCurrent(0);
+      player.go(0);
+      console.log(audioElement[0]);
+   });
+
+
    History.Adapter.bind(window,'statechange',function() {
       State = History.getState();
       $('#content').load(State.url);
@@ -292,7 +313,13 @@ $(document).ready(function() {
    function identify_badges() {
       jQuery.each($('.bandBadge'), function(i) {
          this.json = json[i];
+         this.queue = [new Song(this.json["bName"],
+                                this.json["aName"],
+                                this.json["sName"],
+                                this.json["sPath"],
+                                this.json["bPic"])];
          badges[i] = this;
+
       });
    };
 });
