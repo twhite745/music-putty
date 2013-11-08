@@ -1,8 +1,35 @@
+//BASE.JS : contains player js logic, some misplaced on document for page specific stuff
+//
+//PUBLIC METHODS FOR PLAYER
+//
+// player.play(offset) : plays song of according offset (prev is -1, curr is 0, next is 1)
+//
+// player.addSong(idx,song1/[songs1],song2/[songs2],.....,songN/[songsN])
+//    adds song object(s) to player at idx
+//    if idx > # items in playlist, end of playlist assumed
+//
+// player.addSongNext(song1/[songs1],song2/[songs2],.....,songN/[songsN])
+//    adds song object(s) to player after current song
+//
+// player.addSongLast(song1/[songs1],song2/[songs2],.....,songN/[songsN])
+//    adds song object(s) to player as last item in playlist
+//
 //requires jquery, underscore.js
+///////////////////////////////
 var audio = $('audio');
 var badges = [];
 var json = 'hi';
 var State = History.getState();
+var player = $('#play-bar');
+
+//class SONG
+var Song = function(bandName, albumName, songName, audioPath, artPath) {
+   this.bandName = bandName;
+   this.albumName = albumName;
+   this.songName = songName;
+   this.audioPath = audioPath;
+   this.artPath = artPath;
+}
 
 
 
@@ -15,19 +42,9 @@ Array.prototype.insert = function(index) {
     return index;
 };
         
-Array.prototype.next = function() {
-    return this[++this.current];
- }
-  
-Array.prototype.prev = function() {
-   return this[--this.current];
-}
-   
 Array.prototype.flatten = function() {
    arr = _.flatten(this);
 }
- 
-Array.prototype.current = 0;
 
 Array.prototype.clear = function() {
    this.splice(0,this.length);
@@ -37,26 +54,7 @@ Array.prototype.empty = function() {
    return !this.length;
 }
 
-Array.prototype.curr = function() {
-   return this[this.current];
-}
-
-//GLOBAL VARS
-var isSong = function(possibleSong) {
-   return possibleSong instanceof Song;
-}
-   
-
-//class SONG
-var Song = function(bandName, albumName, songName, audioPath, artPath) {
-   this.bandName = bandName;
-   this.albumName = albumName;
-   this.songName = songName;
-   this.audioPath = audioPath;
-   this.artPath = artPath;
-}
-
-//class QUEUE
+//class Queue
 var Queue = function() {
    this.data = new Array();
 }
@@ -83,6 +81,7 @@ var ViewableQueue = function(domElement) {
 }
 
 
+//class ViewableQueue
 ViewableQueue.prototype = new Queue();
 
 ViewableQueue.prototype.clear = function() {
@@ -166,7 +165,6 @@ ViewableQueue.prototype.addLast = function(songs) {
                 .call(this, this.data.length, arguments);
 }
 
-var player = $('#play-bar');
 player.playlistElement = player.find('playlist');
 player.playlist = new ViewableQueue(player.playlistElement);
 var currentIdx = 0;
@@ -176,6 +174,7 @@ var playButton = player.find('pop');
 var song = player.find('song');
 var album = player.find('album');
 var band = player.find('band');
+
 playButton.on('click', function() {
    player.handlePlay();
 });
@@ -196,16 +195,16 @@ player.addSongNext = function() {
    ViewableQueue.prototype.add.apply(this.playlist, arguments);
 }
 
-player.addSong = function() {
+player.addSong = function(idx, songOrSongArray, songOrSongArray, etc) {
    ViewableQueue.prototype.add.apply(this.playlist, arguments);
 }
 
-player.addSongToEnd = function() {
+player.addSongLast = function() {
    [].splice.call(arguments,0,0,player.playlist.data.length);
    ViewableQueue.prototype.add.apply(this.playlist, arguments);
 }
 
-player.go = function(offset) {
+player.play = function(offset) {
    if (currentIdx == player.playlist.data.length - 1 && offset > 0) {
       player.setStopped();
    }
@@ -293,7 +292,7 @@ $(document).ready(function() {
       player.clearPlaylist();
       player.addSongNext(this.queue);
       player.updateCurrent(0);
-      player.go(0);
+      player.play(0);
       console.log(audioElement[0]);
    });
 
