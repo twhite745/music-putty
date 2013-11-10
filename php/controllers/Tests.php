@@ -24,6 +24,21 @@ class Tests {
           echo '<br />';
       }
    }
+
+   function forms() {
+      F3::clear("SESSION['username']");
+      Main::display('forms.html');
+   }
+   function storeName() {
+      $postArray = (F3::get('POST'));
+      var_dump($postArray);
+      F3::set("SESSION['username']",$postArray["name"]);
+      F3::set("SESSION['password']",$postArray["password"]);
+      if ($postArray['name'] == 'steve') {
+         Main::display('forms.html');
+      }
+      else Main::display('welcome.html');
+   }
    function update() {
       Main::update('tests.html');
    }

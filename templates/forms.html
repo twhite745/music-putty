@@ -1,0 +1,23 @@
+<form name="myName" action="/tests/forms" method="post">
+username:
+   <check if="{{isset(@SESSION['username'])}}" >
+      <true>
+         <input type="text" name="name" value="{{@SESSION['username']}}">
+         You fucked up, try again steve
+      </true>
+      <false>
+         <input type="text" name="name">
+         Welcome.
+      </false>
+   </check>
+password:
+   <check if="{{ isset(@SESSION['password']) }}" >
+      <true>
+         <input type="password" name="password" value="{{@SESSION['password']}}">
+      </true>
+      <false>
+         <input type="password" name="password">
+      </false>
+   </check>
+<input type="submit" value="Submit">
+</form>
